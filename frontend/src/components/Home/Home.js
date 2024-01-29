@@ -13,9 +13,11 @@ const Home = () => {
       <Container component="main" maxWidth="sm">
         <Paper elevation={3}>
           {isSignedIn !== 'null' && isSignedIn !== null ? (
-            <Typography variant="h4" align="center" color="primary">
-              {`Welcome ${user.name}`}
-            </Typography>
+            <>
+              <Typography variant="h4" align="center" color="primary">
+                {`Welcome ${user.name}`}
+              </Typography>
+            </>
           ) : (
             <Typography variant="h4" align="center" color="primary">
               Login to Play
