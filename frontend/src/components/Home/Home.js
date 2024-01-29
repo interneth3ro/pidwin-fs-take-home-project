@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grow, Paper, Typography } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
+import Game from '../Game/Game';
 
 const Home = () => {
   const user = localStorage.getItem('profile')
@@ -17,6 +18,7 @@ const Home = () => {
               <Typography variant="h4" align="center" color="primary">
                 {`Welcome ${user.name}`}
               </Typography>
+              <Game />
             </>
           ) : (
             <Typography variant="h4" align="center" color="primary">
