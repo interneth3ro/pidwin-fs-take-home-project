@@ -1,6 +1,6 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.js';
 
 const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -8,11 +8,11 @@ const signup = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User Already Exist" });
+      return res.status(400).json({ message: 'User Already Exist' });
     }
 
     if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Password Does Not Match" });
+      return res.status(400).json({ message: 'Password Does Not Match' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -20,6 +20,7 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
+      tokens: 100,
     });
     const token = jwt.sign(
       {
@@ -27,14 +28,15 @@ const signup = async (req, res) => {
         name: result.name,
         email: result.email,
         password: result.hashedPassword,
+        tokens: 100,
       },
-      "test",
-      { expiresIn: "1h" }
+      'test',
+      { expiresIn: '1h' }
     );
 
     res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
     console.log(error);
   }
 };
