@@ -3,8 +3,11 @@ import { LOGIN, LOGOUT } from '../constants/actionTypes';
 const loginReducer = (state = { authData: null }, action) => {
   switch (action.type) {
     case LOGIN:
-      localStorage.setItem('profile', JSON.stringify({ ...action?.data }));
-      return { ...state, authData: action?.data };
+      localStorage.setItem(
+        'profile',
+        JSON.stringify({ token: action?.data.token })
+      );
+      return { ...state, authData: action?.data.token };
 
     case LOGOUT:
       localStorage.clear();

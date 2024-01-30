@@ -1,9 +1,17 @@
-import { COINTOSS } from '../constants/actionTypes';
+import { COINTOSS, INIT_GAME } from '../constants/actionTypes';
 
-const gameReducer = (state = { gameData: null }, action) => {
+const gameReducer = (state = { gameState: null }, action) => {
   switch (action.type) {
+    case INIT_GAME:
+      return {
+        ...state,
+        gameState: action?.data,
+      };
     case COINTOSS:
-      return { ...state, gameData: action?.data };
+      return {
+        ...state,
+        gameState: action?.data,
+      };
     default:
       return state;
   }

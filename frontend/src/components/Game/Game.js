@@ -6,14 +6,18 @@ import {
   CardContent,
   FormControlLabel,
   Grid,
+  Paper,
   Radio,
   RadioGroup,
   TextField,
+  Typography,
+  FormHelperText,
 } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
 import { styles } from './styles';
-import { useDispatch } from 'react-redux';
-import { coinToss } from '../../actions/game';
+import { useDispatch, useSelector } from 'react-redux';
+import { coinToss } from '../../api/index';
+import { COINTOSS } from '../../constants/actionTypes';
 
 const initialFormData = {
   wager: 0,
@@ -21,7 +25,12 @@ const initialFormData = {
 };
 
 const Game = () => {
+  const gameState = useSelector((state) => state?.game?.gameState);
   const [formData, setFormData] = useState(initialFormData);
+  const [coinTossed, setCoinTossed] = useState(false);
+  const [tossResult, setTossResult] = useState(null);
+  const [wagerError, setWagerError] = useState(false);
+  const [wagerErrorText, setWagerErrorText] = useState('');
   const user = localStorage.getItem('profile')
     ? jwtDecode(JSON.parse(localStorage.getItem('profile')).token)
     : 'null';
@@ -30,13 +39,37 @@ const Game = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setWagerError(false);
+    if (formData.wager > gameState.currentBalance) {
+      setWagerError(true);
+      setWagerErrorText('You cannot wager more than you have!');
+    } else {
+      setWagerError(false);
+      setWagerErrorText('');
+      tossCoin();
+    }
+  };
+
+  const tossCoin = async () => {
     const payload = {
       userId: user._id,
       wager: formData.wager,
-      choice: formData.choice,
+      choice: formData.choice === '' ? 'heads' : formData.choice,
+      currentStreak: gameState?.currentStreak,
     };
 
-    dispatch(coinToss(payload));
+    const { data } = await coinToss(payload);
+    setCoinTossed(true);
+    setTossResult(data.result);
+    const { currentStreak, currentBalance } = data.result;
+    dispatch({
+      type: COINTOSS,
+      data: {
+        currentStreak,
+        currentBalance,
+      },
+    });
+    console.log(data);
   };
 
   const handleChange = (e) => {
@@ -59,7 +92,11 @@ const Game = () => {
                   onChange={handleChange}
                   autoFocus
                   variant="outlined"
+                  error={wagerError}
                 />
+                <FormHelperText error={wagerError}>
+                  {wagerErrorText}
+                </FormHelperText>
               </Grid>
               <Grid item sm={6}>
                 <RadioGroup
@@ -92,6 +129,19 @@ const Game = () => {
               </Button>
             </Grid>
           </form>
+          {coinTossed && (
+            <Paper sx={styles.resultContainer} elevation={3}>
+              {tossResult.isWin ? (
+                <Typography variant="h4" align="center" color="secondary">
+                  You won!
+                </Typography>
+              ) : (
+                <Typography variant="h4" align="center" color="primary">
+                  You lost
+                </Typography>
+              )}
+            </Paper>
+          )}
         </CardContent>
       </Card>
     </Box>

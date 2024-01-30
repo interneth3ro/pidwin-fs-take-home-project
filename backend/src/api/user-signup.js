@@ -33,7 +33,7 @@ const signup = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({ token, currentBalance: 100 });
+    res.status(200).json({ token, currentBalance: existingUser.tokens });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
     console.log(error);

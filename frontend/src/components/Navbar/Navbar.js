@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import * as actionType from '../../constants/actionTypes';
 import { styles } from './styles';
 
 const Navbar = () => {
+  const tokens = useSelector((state) => state?.game?.gameState?.currentBalance);
   const [user, setUser] = useState(
     localStorage.getItem('profile')
       ? jwtDecode(JSON.parse(localStorage.getItem('profile')).token)
       : 'null'
-  );
-  const [tokens, setTokens] = useState(
-    localStorage.getItem('profile')
-      ? JSON.parse(localStorage.getItem('profile')).currentBalance
-      : 0
   );
 
   const dispatch = useDispatch();

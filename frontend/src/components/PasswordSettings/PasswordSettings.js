@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Button,
@@ -6,25 +6,25 @@ import {
   Grid,
   Paper,
   Typography,
-} from "@mui/material";
-import Input from "../Login/Input";
-import { styles } from "./styles";
-import LockIcon from "@mui/icons-material/LockRounded";
-import { changePassword } from "../../actions/login";
-import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+} from '@mui/material';
+import Input from '../Login/Input';
+import { styles } from './styles';
+import LockIcon from '@mui/icons-material/LockRounded';
+import { changePassword } from '../../actions/login';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const PasswordSetting = () => {
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
+  const user = localStorage.getItem('profile')
+    ? jwtDecode(JSON.parse(localStorage.getItem('profile')).token)
+    : 'null';
   const isSingedIn = user;
   const history = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [changeFormData, setChangeFormData] = useState({
-    oldPassword: "",
-    newPassword: "",
+    oldPassword: '',
+    newPassword: '',
     email: user.email,
   });
   const dispatch = useDispatch();
@@ -43,12 +43,12 @@ const PasswordSetting = () => {
   };
 
   useEffect(() => {
-    if (isSingedIn == "null" || isSingedIn === null) {
-      history("/");
+    if (isSingedIn === 'null' || isSingedIn === null) {
+      history('/');
     }
   }, []);
 
-  if (isSingedIn !== "null" && isSingedIn !== null) {
+  if (isSingedIn !== 'null' && isSingedIn !== null) {
     return (
       <div>
         <Container component="main" maxWidth="xs">
@@ -67,13 +67,14 @@ const PasswordSetting = () => {
                   sx={styles.typo}
                   align="left"
                 >
-                  To change your password, enter your current password and your new password.
+                  To change your password, enter your current password and your
+                  new password.
                 </Typography>
                 <Input
                   name="oldPassword"
                   label="Current Password"
                   handleChange={handleChangeC}
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   handleShowPassword={handleShowPassword}
                 />
                 <Input

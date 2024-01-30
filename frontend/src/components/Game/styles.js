@@ -12,4 +12,7 @@ export const styles = {
     marginLeft: '15px',
     marginTop: '10px',
   },
+  resultContainer: {
+    marginTop: '10px',
+  },
 };

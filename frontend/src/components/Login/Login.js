@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Avatar,
   Button,
@@ -6,30 +6,31 @@ import {
   Grid,
   Paper,
   Typography,
-} from "@mui/material";
-import Input from "./Input";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { signup, login } from "../../actions/login";
-import LockIcon from "@mui/icons-material/LockOutlined";
-import { styles } from "./styles";
+} from '@mui/material';
+import Input from './Input';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { signup, login } from '../../actions/login';
+import LockIcon from '@mui/icons-material/LockOutlined';
+import { styles } from './styles';
+import { initGame } from '../../actions/game';
 
 const formDataInitVal = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const Login = () => {
   const [formData, setFormData] = useState(formDataInitVal);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
+  const user = localStorage.getItem('profile')
+    ? jwtDecode(JSON.parse(localStorage.getItem('profile')).token)
+    : 'null';
 
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -55,8 +56,8 @@ const Login = () => {
     setIsLoggedIn((prevState) => !prevState);
   };
 
-  if (user !== "null" && user !== null) {
-    history("/");
+  if (user !== 'null' && user !== null) {
+    history('/');
     return null;
   } else {
     return (
@@ -64,11 +65,11 @@ const Login = () => {
         <Container component="main" maxWidth="xs">
           <Paper sx={styles.paper} elevation={3}>
             <Avatar sx={styles.avatar}>
-              {" "}
+              {' '}
               <LockIcon />
             </Avatar>
             <Typography variant="h5" color="primary">
-              {isLoggedIn ? "Login" : "Logout"}
+              {isLoggedIn ? 'Login' : 'Logout'}
             </Typography>
             <form sx={styles.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
@@ -100,7 +101,7 @@ const Login = () => {
                   name="password"
                   label="Password"
                   handleChange={handleChange}
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   handleShowPassword={handleShowPassword}
                   half={isLoggedIn ? false : true}
                   showBar={isLoggedIn ? false : true}
@@ -125,14 +126,14 @@ const Login = () => {
                 variant="contained"
                 color="primary"
               >
-                {isLoggedIn ? "Login" : "Sign Up"}
+                {isLoggedIn ? 'Login' : 'Sign Up'}
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Button onClick={switchLogin}>
                     {isLoggedIn
                       ? "Don't Have An Account? Sign Up."
-                      : "Already Have An Account? Login."}
+                      : 'Already Have An Account? Login.'}
                   </Button>
                 </Grid>
               </Grid>
