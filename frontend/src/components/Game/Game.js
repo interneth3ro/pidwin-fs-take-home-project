@@ -10,28 +10,37 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
-import Input from '../Login/Input';
 import { jwtDecode } from 'jwt-decode';
 import { styles } from './styles';
-import { Form } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { coinToss } from '../../actions/game';
+
+const initialFormData = {
+  wager: 0,
+  choice: '',
+};
 
 const Game = () => {
-  const [wager, setWager] = useState(0);
-  const [choice, setChoice] = useState('heads');
+  const [formData, setFormData] = useState(initialFormData);
   const user = localStorage.getItem('profile')
     ? jwtDecode(JSON.parse(localStorage.getItem('profile')).token)
     : 'null';
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const payload = {
+      userId: user._id,
+      wager: formData.wager,
+      choice: formData.choice,
+    };
+
+    dispatch(coinToss(payload));
   };
 
-  const handleWagerChange = (e) => {
-    setWager(e.target.value);
-  };
-
-  const handleChoiceChange = (e) => {
-    setChoice(e.target.value);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -40,24 +49,24 @@ const Game = () => {
         <CardContent>
           <form sx={styles.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
-              <Grid item sm="6">
+              <Grid item sm={6}>
                 <TextField
                   name="wager"
                   label="Wager"
                   required
                   type="number"
                   min="1"
-                  handleChange={handleWagerChange}
+                  onChange={handleChange}
                   autoFocus
                   variant="outlined"
                 />
               </Grid>
-              <Grid item sm="6">
+              <Grid item sm={6}>
                 <RadioGroup
                   row
                   defaultValue="heads"
-                  name="radio-buttons-group"
-                  handleChange={handleChoiceChange}
+                  name="choice"
+                  onChange={handleChange}
                   sx={styles.radioGroup}
                 >
                   <FormControlLabel

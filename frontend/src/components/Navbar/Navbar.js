@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@mui/material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -34,18 +33,6 @@ const Navbar = () => {
     );
   }, [location]);
 
-  const AvatarContainer = styled.div`
-    display: flex;
-    & > * {
-      margin: 4px;
-    }
-  `;
-
-  const AvatarLabel = styled.div`
-    dispay: flex;
-    align-items: center;
-  `;
-
   return (
     <AppBar sx={styles.appBar} position="static" color="inherit">
       <div sx={styles.brandContainer}>
@@ -62,16 +49,16 @@ const Navbar = () => {
       <Toolbar sx={styles.toolbar}>
         {user !== 'null' && user !== null ? (
           <div sx={styles.profile}>
-            <AvatarContainer>
-              <AvatarLabel>
+            <div sx={styles.avatarContainer}>
+              <div sx={styles.avatarLabel}>
                 <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
                   {user.name.charAt(0)}
                 </Avatar>
-              </AvatarLabel>
-              <Typography sx={styles.userName} variant="h6">
-                Tokens: {user.tokens}
-              </Typography>
-            </AvatarContainer>
+              </div>
+            </div>
+            <Typography sx={styles.userName} variant="h6">
+              Tokens: {user.tokens}
+            </Typography>
             <Typography sx={styles.userName} variant="h6">
               {user.name}
             </Typography>
