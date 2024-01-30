@@ -12,6 +12,12 @@ const Navbar = () => {
       ? jwtDecode(JSON.parse(localStorage.getItem('profile')).token)
       : 'null'
   );
+  const [tokens, setTokens] = useState(
+    localStorage.getItem('profile')
+      ? JSON.parse(localStorage.getItem('profile')).currentBalance
+      : 0
+  );
+
   const dispatch = useDispatch();
   let location = useLocation();
   const history = useNavigate();
@@ -54,11 +60,11 @@ const Navbar = () => {
                 <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
                   {user.name.charAt(0)}
                 </Avatar>
+                <Typography sx={styles.userName} variant="h6">
+                  Tokens: {tokens}
+                </Typography>
               </div>
             </div>
-            <Typography sx={styles.userName} variant="h6">
-              Tokens: {user.tokens}
-            </Typography>
             <Typography sx={styles.userName} variant="h6">
               {user.name}
             </Typography>

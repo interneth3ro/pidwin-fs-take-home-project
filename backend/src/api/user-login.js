@@ -27,13 +27,12 @@ const login = async (req, res) => {
         name: existingUser.name,
         email: existingUser.email,
         password: existingUser.password,
-        tokens: existingUser.tokens,
       },
       'test',
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, currentBalance: existingUser.tokens });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
