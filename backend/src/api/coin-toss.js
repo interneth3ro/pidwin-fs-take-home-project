@@ -14,6 +14,7 @@ const coinToss = async (req, res) => {
     let streak = currentStreak;
     // assume loss at first as it's easier
     let result = {
+      flipResult: tossResult,
       isWin: false,
       payout: 0,
       currentStreak: 0,

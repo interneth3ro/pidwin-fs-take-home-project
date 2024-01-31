@@ -15,4 +15,3 @@ export const signUp = (formData) => API.post('/api/user/signup', formData);
 export const changePassword = (formData) =>
   API.post('/api/user/changePassword', formData);
 export const coinToss = (formData) => API.post('/api/user/coinToss', formData);
-export const getUserTokens = () => API.get('/api/user/getUserTokens');

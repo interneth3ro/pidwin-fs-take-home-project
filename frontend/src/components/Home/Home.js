@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <Grow in>
-      <Container component="main" maxWidth="sm">
+      <Container component="main" maxWidth="m">
         <Paper elevation={3}>
           {isSignedIn !== 'null' && isSignedIn !== null ? (
             <>
